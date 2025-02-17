@@ -2,6 +2,42 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+// To get started with this project run in terminal:
+
+````bash
+npx create-next-app .
+
+# then
+
+npm install prisma typescript tsx @types/node --save-dev
+
+// Then initialize the prisma database:
+
+npx prisma init
+
+// Create a DATABASE_URL and DIRECT_URL in the .env file:
+// Copy the data from supabase via route supabase/connect => Transaction_pooler and Session_pooler
+
+// Then create a new database schema and run the following command:
+
+npx prisma db push
+# or
+npx prisma migrate dev --name init
+
+# to clean up db
+npx prisma migrate reset
+
+## Setup shadcn ui-kit
+
+npx shadcn@latest init
+
+// configure the shadcn in tailwind.config.ts and components.json
+
+// install first shadcn package "button"
+
+npx shadcn@latest add button
+
+
 First, run the development server:
 
 ```bash
@@ -12,22 +48,11 @@ yarn dev
 pnpm dev
 # or
 bun dev
-```
+````
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 

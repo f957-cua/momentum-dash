@@ -1,0 +1,37 @@
+model Module {
+  id          String         @id @default(cuid())
+  name        String
+  client      Client         @relation(fields: [client_id], references: [id])
+  client_id   String
+  employee    Employee       @relation(fields: [employee_id], references: [id])
+  employee_id String
+  notes       String?
+  duration    ModuleDuration
+  status      ModuleStatus   @default(PENDING)
+}
+
+enum ModuleDuration {
+  HALF_HOUR
+  ONE_HOUR
+  ONE_AND_HALF_HOUR
+  TWO_HOURS
+  TWO_AND_HALF_HOURS
+  THREE_HOURS
+  THREE_AND_HALF_HOURS
+  FOUR_HOURS
+  FOUR_AND_HALF_HOURS
+  FIVE_HOURS
+  FIVE_AND_HALF_HOURS
+  SIX_HOURS
+  SIX_AND_HALF_HOURS
+  SEVEN_HOURS
+  SEVEN_AND_HALF_HOURS
+  EIGHT_HOURS
+}
+
+enum ModuleStatus {
+  PENDING
+  IN_PROGRESS
+  PAUSED
+  COMPLETED
+}

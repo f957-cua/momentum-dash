@@ -1,0 +1,8 @@
+model Customer {
+  id        String     @id @default(cuid())
+  name      String
+  email     String
+  employees Employee[]
+  client    Client?    @relation(fields: [client_id], references: [id])
+  client_id String?
+}

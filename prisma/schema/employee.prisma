@@ -1,0 +1,8 @@
+model Employee {
+  id         String     @id @default(cuid())
+  email      String     @unique
+  first_name String
+  last_name  String
+  modules    Module[]
+  customer   Customer[]
+}

@@ -1,0 +1,8 @@
+model Client {
+  id    String @id @default(cuid())
+  email String @unique
+  name  String
+
+  module    Module[]
+  customers Customer[]
+}
