@@ -21,9 +21,9 @@ export default async function Employee({
         <h1 className="text-4xl font-bold mb-8 text-[#333333]">
           {employee.first_name} {employee.last_name}
         </h1>
-        <p className="text-gray-600 text-center">by {employee.email}</p>
+        <p className="text-gray-600 text-center">by {employee.id}</p>
         <div className="prose prose-gray mt-8">
-          {employee.email || "No content available."}
+          {employee.id || "No content available."}
         </div>
       </article>
     </div>

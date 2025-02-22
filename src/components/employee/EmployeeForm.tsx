@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/shared/ui/form";
 import { Input } from "@/shared/ui/input";
-import { CustomerSelect } from "./CustomerSelect";
+import { EmployeeSelect } from "./EmployeeSelect";
 
 const formSchema = z.object({
   first_name: z.string({
@@ -24,13 +24,6 @@ const formSchema = z.object({
   last_name: z.string({
     required_error: "Please input employee last name.",
   }),
-  email: z
-    .string({
-      required_error: "Please input employee email.",
-    })
-    .email({
-      message: "Please input a valid email.",
-    }),
   customer_id: z.string({
     required_error: "Please select customer.",
   }),
@@ -93,24 +86,11 @@ function EmployeeForm({
         />
         <FormField
           control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Employee public email</FormLabel>
-              <FormControl>
-                <Input placeholder="Input employee email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="customer_id"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Select existed customer</FormLabel>
-              <CustomerSelect field={field} items={customerList} />
+              <EmployeeSelect field={field} items={customerList} />
               <FormMessage />
             </FormItem>
           )}

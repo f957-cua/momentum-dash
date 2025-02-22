@@ -18,7 +18,7 @@ async function CustomerAdd() {
     if (!name || !email) {
       throw new Error("Please fill out all fields.");
     }
-    // Create the post using Prisma
+
     try {
       await db.customer.create({
         data: {
@@ -37,8 +37,8 @@ async function CustomerAdd() {
 
   const clients = await db.client.findMany();
 
-  if (!clients) {
-    return <div>Add at least one client firstly</div>;
+  if (!clients.length) {
+    return <div className="text-center">Add at least one client firstly</div>;
   }
 
   return (

@@ -12,9 +12,11 @@ async function ModuleAdd() {
 
   const employees = await db.employee.findMany();
 
-  if (!clients || !employees) {
+  if (!clients.length || !employees.length) {
     return (
-      <div>Create the client and the employee to attach the module to</div>
+      <div className="text-center">
+        Create the client and the employee to attach the module to
+      </div>
     );
   }
 

@@ -13,19 +13,17 @@ async function ClientAdd() {
 
     const first_name = formData.first_name;
     const last_name = formData.last_name;
-    const email = formData.email;
     const customer_id = formData.customer_id;
 
-    if (!first_name || !last_name || !email || !customer_id) {
+    if (!first_name || !last_name || !customer_id) {
       throw new Error("Please fill out all fields.");
     }
-    // Create the post using Prisma
+
     try {
       await db.employee.create({
         data: {
           first_name,
           last_name,
-          email,
           customer_id,
         },
       });
@@ -33,15 +31,14 @@ async function ClientAdd() {
       console.error("Error adding client to prisma: ", error);
     }
 
-    
     revalidatePath("/employees");
     redirect("/employees");
   }
 
   const customers = await db.customer.findMany();
 
-  if (!customers) {
-    return <div>Add at least one customer firstly</div>;
+  if (!customers.length) {
+    return <div className="text-center">Add at least one customer firstly</div>;
   }
 
   return (

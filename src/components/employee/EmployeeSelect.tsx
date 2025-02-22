@@ -8,7 +8,7 @@ import {
 } from "@/shared/ui/select";
 import { ControllerRenderProps } from "react-hook-form";
 
-export function CustomerSelect({
+export function EmployeeSelect({
   field,
   items,
 }: {
@@ -16,7 +16,6 @@ export function CustomerSelect({
     {
       first_name: string;
       last_name: string;
-      email: string;
       customer_id: string;
     },
     "customer_id"
