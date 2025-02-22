@@ -74,7 +74,6 @@ export function ModuleForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
     await action(values as Module);
 
     // Clear the form.

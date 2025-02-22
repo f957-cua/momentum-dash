@@ -3,6 +3,6 @@ model Customer {
   name      String
   email     String
   employees Employee[]
-  client    Client?    @relation(fields: [client_id], references: [id])
-  client_id String?
+  client    Client     @relation(fields: [client_id], references: [id])
+  client_id String
 }

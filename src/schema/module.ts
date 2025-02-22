@@ -19,4 +19,24 @@ export const ModuleDurationStatus = z.enum([
   "EIGHT_HOURS",
 ]);
 
+export const ModuleSchemaType = z.object({
+  name: z.string(),
+  client_id: z.string(),
+  employee_id: z.string(),
+  duration: ModuleDurationStatus,
+  notes: z.string().optional(),
+  client: z.object({
+    id: z.string(),
+    name: z.string(),
+    email: z.string(),
+  }),
+  employee: z.object({
+    id: z.string(),
+    first_name: z.string(),
+    last_name: z.string(),
+  }),
+});
+
+export type ModuleType = z.infer<typeof ModuleSchemaType>;
+
 export type ModuleDurationStatusType = z.infer<typeof ModuleDurationStatus>;

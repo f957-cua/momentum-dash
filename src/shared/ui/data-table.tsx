@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { DURATION } from "@/shared/static/duration";
 
 import {
   ColumnDef,
@@ -19,9 +18,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/shared/ui/table";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
+} from "./table";
+import { Button } from "./button";
+import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -86,40 +85,14 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => {
-                    switch (cell.column.id) {
-                      case "client_id":
-                        return (
-                          <TableCell key={cell.id}>
-                            {cell.row.original?.client?.name}
-                          </TableCell>
-                        );
-                      case "employee_id":
-                        return (
-                          <TableCell key={cell.id}>
-                            {cell.row.original?.employee?.first_name}{" "}
-                            {cell.row.original?.employee?.last_name}
-                          </TableCell>
-                        );
-                      case "duration":
-                        return (
-                          <TableCell key={cell.id}>
-                            {
-                              DURATION.find(
-                                ({ id }) => id === cell.row.original?.duration,
-                              )?.visibleValue
-                            }
-                          </TableCell>
-                        );
-                      default:
-                        return (
-                          <TableCell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </TableCell>
-                        );
-                    }
+                    return (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    );
                   })}
                 </TableRow>
               ))

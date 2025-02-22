@@ -1,9 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Module } from "@prisma/client";
+import { DURATION } from "@/shared/static/duration";
+import { ModuleType } from "@/schema/module";
 
-export const columns: ColumnDef<Module>[] = [
+export const columns: ColumnDef<ModuleType>[] = [
   {
     accessorKey: "id",
     header: "Module Id",
@@ -15,6 +16,10 @@ export const columns: ColumnDef<Module>[] = [
   {
     accessorKey: "duration",
     header: "Planned time spent",
+    cell: ({ row }) => {
+      return DURATION.find(({ id }) => id === row.original?.duration)
+        ?.visibleValue;
+    },
   },
   {
     accessorKey: "notes",
@@ -23,10 +28,16 @@ export const columns: ColumnDef<Module>[] = [
   {
     accessorKey: "client_id",
     header: "Current client",
+    cell: ({ row }) => {
+      return row.original?.client?.name;
+    },
   },
   {
     accessorKey: "employee_id",
     header: "Responsible employee",
+    cell: ({ row }) => {
+      return `${row.original?.employee?.first_name} ${row.original?.employee?.last_name}`;
+    },
   },
   {
     accessorKey: "status",

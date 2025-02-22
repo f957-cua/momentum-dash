@@ -1,6 +1,6 @@
 import React from "react";
 import { db } from "@/shared/lib/db";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/shared/ui/data-table";
 import { columns } from "./columns";
 
 async function Employees() {

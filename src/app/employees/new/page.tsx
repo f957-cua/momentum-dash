@@ -7,15 +7,16 @@ import { db } from "@/shared/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-function ClientAdd() {
+async function ClientAdd() {
   async function createEmployee(formData: Employee) {
     "use server";
 
     const first_name = formData.first_name;
     const last_name = formData.last_name;
     const email = formData.email;
+    const customer_id = formData.customer_id;
 
-    if (!first_name || !last_name || !email) {
+    if (!first_name || !last_name || !email || !customer_id) {
       throw new Error("Please fill out all fields.");
     }
     // Create the post using Prisma
@@ -25,20 +26,28 @@ function ClientAdd() {
           first_name,
           last_name,
           email,
+          customer_id,
         },
       });
     } catch (error) {
       console.error("Error adding client to prisma: ", error);
     }
 
+    
     revalidatePath("/employees");
     redirect("/employees");
+  }
+
+  const customers = await db.customer.findMany();
+
+  if (!customers) {
+    return <div>Add at least one customer firstly</div>;
   }
 
   return (
     <div className="w-6/12 mx-auto">
       <h1 className="text-center font-bold py-8">Create new Employee</h1>
-      <EmployeeForm action={createEmployee} />
+      <EmployeeForm action={createEmployee} customerList={customers} />
     </div>
   );
 }

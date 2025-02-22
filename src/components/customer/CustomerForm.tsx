@@ -42,19 +42,12 @@ function CustomerForm({
   action: (data: Customer) => void;
   clientList: Client[];
 }) {
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-
     await action(values as Customer);
-
-    // Clear the form.
     form.reset();
   }
 

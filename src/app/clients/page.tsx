@@ -2,7 +2,7 @@ import React from "react";
 import { db } from "@/shared/lib/db";
 
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/shared/ui/data-table";
 
 async function Clients() {
   const data = await db.client.findMany();

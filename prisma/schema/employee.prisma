@@ -1,8 +1,9 @@
 model Employee {
-  id         String     @id @default(cuid())
-  email      String     @unique
-  first_name String
-  last_name  String
-  modules    Module[]
-  customer   Customer[]
+  id          String   @id @default(cuid())
+  email       String   @unique
+  first_name  String
+  last_name   String
+  modules     Module[]
+  customer_id String
+  customer    Customer @relation(fields: [customer_id], references: [id])
 }

@@ -1,15 +1,22 @@
 import { db } from "@/shared/lib/db";
 import React from "react";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/shared/ui/data-table";
 
 async function Modules() {
-  const data = await db.module.findMany({
-    include: {
-      client: true,
-      employee: true,
-    },
-  });
+  const data = await db.module
+    .findMany({
+      include: {
+        client: true,
+        employee: true,
+      },
+    })
+    .then((modules) =>
+      modules.map((module) => ({
+        ...module,
+        notes: module.notes ?? undefined,
+      })),
+    );
 
   return (
     <div className="container mx-auto py-10">
