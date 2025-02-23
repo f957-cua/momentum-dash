@@ -42,7 +42,7 @@ async function ClientAdd() {
   }
 
   return (
-    <div className="w-6/12 mx-auto">
+    <div className="w-[600px] mx-auto">
       <h1 className="text-center font-bold py-8">Create new Employee</h1>
       <EmployeeForm action={createEmployee} customerList={customers} />
     </div>

@@ -2,6 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { CustomerType } from "@/schema/customer";
+import { Button } from "@/shared/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<CustomerType>[] = [
   {
@@ -10,11 +12,31 @@ export const columns: ColumnDef<CustomerType>[] = [
   },
   {
     accessorKey: "name",
-    header: "Customer public Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Customer Public Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "email",
-    header: "Customer public Email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Customer Public Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "client_id",

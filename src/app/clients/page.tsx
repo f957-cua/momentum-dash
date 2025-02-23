@@ -9,6 +9,7 @@ async function Clients() {
 
   return (
     <div className="container mx-auto py-10">
+      <h1 className="text-center font-bold py-8">Clients Datalist</h1>
       <DataTable columns={columns} data={data} />
     </div>
   );

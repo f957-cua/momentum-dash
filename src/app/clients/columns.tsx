@@ -2,6 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Client } from "@prisma/client";
+import { Button } from "@/shared/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<Client>[] = [
   {
@@ -10,10 +12,30 @@ export const columns: ColumnDef<Client>[] = [
   },
   {
     accessorKey: "name",
-    header: "Client Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Client Public Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "email",
-    header: "Client Email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Client Public Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
 ];

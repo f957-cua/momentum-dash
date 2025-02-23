@@ -34,7 +34,7 @@ async function ModuleAdd() {
     }
     // Create the post using Prisma
     try {
-      const res = await db.module.create({
+      await db.module.create({
         data: {
           name,
           client_id,
@@ -48,7 +48,6 @@ async function ModuleAdd() {
           employee: true,
         },
       });
-      console.log("Module created: ", res);
     } catch (error) {
       console.error("Error adding client to prisma: ", error);
     }
@@ -58,7 +57,7 @@ async function ModuleAdd() {
   }
 
   return (
-    <div className="w-6/12 mx-auto">
+    <div className="w-[600px] mx-auto">
       <h1 className="text-center font-bold py-8">Create new Module</h1>
       <ModuleForm
         action={createModule}

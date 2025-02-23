@@ -3,6 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DURATION } from "@/shared/static/duration";
 import { ModuleType } from "@/schema/module";
+import { Button } from "@/shared/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<ModuleType>[] = [
   {
@@ -11,7 +13,17 @@ export const columns: ColumnDef<ModuleType>[] = [
   },
   {
     accessorKey: "name",
-    header: "Module Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Module Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "duration",
@@ -41,6 +53,16 @@ export const columns: ColumnDef<ModuleType>[] = [
   },
   {
     accessorKey: "status",
-    header: "Module status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Module Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
 ];

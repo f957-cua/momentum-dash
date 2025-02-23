@@ -34,7 +34,7 @@ function ClientAdd() {
   }
 
   return (
-    <div className="w-6/12 mx-auto">
+    <div className="w-[600px] mx-auto">
       <h1 className="text-center font-bold py-8">Create new Client</h1>
       <ClientForm action={createClient} />
     </div>

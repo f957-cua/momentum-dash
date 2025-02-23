@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 import {
   ColumnDef,
+  SortingState,
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -22,16 +25,17 @@ import {
 import { Button } from "./button";
 // import { Input } from "./input";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData extends { id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends { id: string }, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
@@ -40,8 +44,11 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnFilters,
+      sorting,
     },
   });
 
@@ -91,10 +98,12 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
+                        <Link href={`/modules/${row.original.id}`}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Link>
                       </TableCell>
                     );
                   })}
