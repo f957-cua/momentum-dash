@@ -1,13 +1,13 @@
 model Module {
   id          String         @id @default(cuid())
   name        String
-  client      Client         @relation(fields: [client_id], references: [id])
   client_id   String
-  employee    Employee       @relation(fields: [employee_id], references: [id])
   employee_id String
-  notes       String?
   duration    ModuleDuration
+  notes       String?
   status      ModuleStatus   @default(PENDING)
+  client      Client         @relation(fields: [client_id], references: [id])
+  employee    Employee       @relation(fields: [employee_id], references: [id])
 }
 
 enum ModuleDuration {

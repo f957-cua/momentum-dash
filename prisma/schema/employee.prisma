@@ -2,7 +2,7 @@ model Employee {
   id          String   @id @default(cuid())
   first_name  String
   last_name   String
-  modules     Module[]
-  customer    Customer @relation(fields: [customer_id], references: [id])
   customer_id String
+  customer    Customer @relation(fields: [customer_id], references: [id])
+  modules     Module[]
 }
