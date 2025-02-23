@@ -32,10 +32,7 @@ export default async function Module({
   const CARD_DESCRIPTION = `Here are the details of the module which have been saved by next id in database ${module_item.id}.`;
 
   return (
-    <div
-      className="w-[540px]
-     mx-auto py-10 px-10"
-    >
+    <div className="w-[540px] mx-auto py-10 px-10">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">{CARD_TITLE}</CardTitle>
