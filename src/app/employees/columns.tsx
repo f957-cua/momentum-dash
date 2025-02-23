@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Employee } from "@prisma/client";
 import { Button } from "@/shared/ui/button";
+import { ActionLink } from "@/components/ActionLink";
 
 export const columns: ColumnDef<Employee>[] = [
   {
@@ -36,6 +37,14 @@ export const columns: ColumnDef<Employee>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const employee = row.original;
+
+      return <ActionLink listName="employees" itemId={employee.id} />;
     },
   },
 ];

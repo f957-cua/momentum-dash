@@ -1,5 +1,15 @@
 import { db } from "@/shared/lib/db";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/shared/ui/card";
+import { DataTable } from "@/shared/ui/data-table";
 import { notFound } from "next/navigation";
+import { ModuleType } from "@/schema/module";
+import { columns } from "../../modules/columns";
 
 export default async function Employee({
   params,
@@ -7,6 +17,7 @@ export default async function Employee({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+
   const employee = await db.employee.findUnique({
     where: { id: id },
   });
@@ -15,17 +26,54 @@ export default async function Employee({
     notFound();
   }
 
+  const modules = await db.module.findMany({
+    where: { employee_id: id },
+    include: {
+      client: true,
+      employee: true,
+    },
+  });
+
+  const CARD_TITLE = `Employee ${employee.first_name} ${employee.last_name} Details`;
+  const CARD_DESCRIPTION = `Here are the details of the employee which have been saved by next id in database ${employee.id}.`;
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
-      <article className="max-w-2xl space-y-4 font-[family-name:var(--font-geist-sans)]">
-        <h1 className="text-4xl font-bold mb-8 text-[#333333]">
-          {employee.first_name} {employee.last_name}
-        </h1>
-        <p className="text-gray-600 text-center">by {employee.id}</p>
-        <div className="prose prose-gray mt-8">
-          {employee.id || "No content available."}
-        </div>
-      </article>
+    <div className="container mx-auto py-10 px-10">
+      <Card>
+        <CardHeader>
+          <CardTitle>{CARD_TITLE}</CardTitle>
+          <CardDescription>{CARD_DESCRIPTION}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Employee Public Information Board</p>
+          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium leading-none">
+                Employee First Name
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {employee.first_name}
+              </p>
+            </div>
+          </div>
+          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium leading-none">
+                Employee Last Name
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {employee.last_name}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      <h1 className="text-center font-bold py-8">
+        Employee {employee.first_name} {employee.last_name} Modules Datalist
+      </h1>
+      <DataTable data={modules as ModuleType[]} columns={columns} />
     </div>
   );
 }

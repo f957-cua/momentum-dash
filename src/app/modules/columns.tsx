@@ -5,6 +5,7 @@ import { DURATION } from "@/shared/static/duration";
 import { ModuleType } from "@/schema/module";
 import { Button } from "@/shared/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import { ActionLink } from "@/components/ActionLink";
 
 export const columns: ColumnDef<ModuleType>[] = [
   {
@@ -63,6 +64,14 @@ export const columns: ColumnDef<ModuleType>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const module_item = row.original;
+
+      return <ActionLink listName="modules" itemId={module_item.id} />;
     },
   },
 ];

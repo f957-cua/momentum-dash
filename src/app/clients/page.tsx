@@ -8,7 +8,7 @@ async function Clients() {
   const data = await db.client.findMany();
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-10">
       <h1 className="text-center font-bold py-8">Clients Datalist</h1>
       <DataTable columns={columns} data={data} />
     </div>

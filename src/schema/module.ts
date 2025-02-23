@@ -20,6 +20,7 @@ export const ModuleDurationStatus = z.enum([
 ]);
 
 export const ModuleSchemaType = z.object({
+  id: z.string(),
   name: z.string(),
   client_id: z.string(),
   employee_id: z.string(),

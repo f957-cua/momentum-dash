@@ -15,7 +15,7 @@ async function Customers() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 px-10">
       <h1 className="text-center font-bold py-8">Customers Datalist</h1>
       <DataTable data={data} columns={columns} />
     </div>

@@ -1,4 +1,13 @@
+import { ModuleTimer } from "@/components/moduleTimer/ModuleTimer";
 import { db } from "@/shared/lib/db";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/shared/ui/card";
+import { convertModuleDuration } from "@/utils/helpers";
 import { notFound } from "next/navigation";
 
 export default async function Module({
@@ -9,23 +18,88 @@ export default async function Module({
   const { id } = await params;
   const module_item = await db.module.findUnique({
     where: { id: id },
+    include: {
+      employee: true,
+      client: true,
+    },
   });
 
   if (!module_item) {
     notFound();
   }
 
+  const CARD_TITLE = `Module: ${module_item.name}`;
+  const CARD_DESCRIPTION = `Here are the details of the module which have been saved by next id in database ${module_item.id}.`;
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center -mt-16">
-      <article className="max-w-2xl space-y-4 font-[family-name:var(--font-geist-sans)]">
-        <h1 className="text-4xl font-bold mb-8 text-[#333333]">
-          {module_item.name}
-        </h1>
-        <p className="text-gray-600 text-center">by {module_item.client_id}</p>
-        <div className="prose prose-gray mt-8">
-          {module_item.status || "No content available."}
-        </div>
-      </article>
+    <div
+      className="w-[540px]
+     mx-auto py-10 px-10"
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">{CARD_TITLE}</CardTitle>
+          <CardDescription>{CARD_DESCRIPTION}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Customer Public Information Board</p>
+          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium leading-none">
+                Responsible Employee attached to
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {module_item.employee.first_name}{" "}
+                {module_item.employee.last_name}
+              </p>
+            </div>
+          </div>
+          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium leading-none">Current Client</p>
+              <p className="text-sm text-muted-foreground">
+                {module_item.client.name}
+              </p>
+            </div>
+          </div>
+          {module_item.notes && (
+            <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+              <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Module Notes</p>
+                <p className="text-sm text-muted-foreground">
+                  {module_item.notes}
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium leading-none">
+                Planned Module Duration
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {convertModuleDuration(module_item.duration)}
+              </p>
+            </div>
+          </div>
+          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
+            <div className="space-y-1">
+              <p className="text-sm font-medium leading-none">Module Status</p>
+              <p className="text-sm text-muted-foreground">
+                {module_item.status}
+              </p>
+            </div>
+          </div>
+          <div className="my-4 flex items-center justify-center pb-4 last:mb-0 last:pb-0">
+            <ModuleTimer />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

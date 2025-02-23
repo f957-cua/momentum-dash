@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 
 import {
   ColumnDef,
@@ -25,12 +24,12 @@ import {
 import { Button } from "./button";
 // import { Input } from "./input";
 
-interface DataTableProps<TData extends { id: string }, TValue> {
+interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData extends { id: string }, TValue>({
+export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -98,12 +97,10 @@ export function DataTable<TData extends { id: string }, TValue>({
                   {row.getVisibleCells().map((cell) => {
                     return (
                       <TableCell key={cell.id}>
-                        <Link href={`/modules/${row.original.id}`}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Link>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
                       </TableCell>
                     );
                   })}
