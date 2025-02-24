@@ -71,7 +71,7 @@ export default async function Employee({
         </CardContent>
       </Card>
       <h1 className="text-center font-bold py-8">
-        Employee {employee.first_name} {employee.last_name} Modules Datalist
+        Modules list for Employee {employee.first_name} {employee.last_name}
       </h1>
       <DataTable data={modules as ModuleType[]} columns={columns} />
     </div>

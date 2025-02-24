@@ -64,7 +64,7 @@ export default async function Customer({
         </CardContent>
       </Card>
       <h1 className="text-center font-bold py-8">
-        Customer {customer.name} Employees Datalist
+        Employees list for Customer {customer.name}
       </h1>
       <DataTable data={employees} columns={columns} />
     </div>
