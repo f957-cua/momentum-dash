@@ -38,7 +38,11 @@ async function CustomerAdd() {
   const clients = await db.client.findMany();
 
   if (!clients.length) {
-    return <div className="text-center">Add at least one client firstly</div>;
+    return (
+      <div className="h-full flex justify-center items-center">
+        Add at least one client firstly
+      </div>
+    );
   }
 
   return (

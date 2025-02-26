@@ -14,7 +14,7 @@ async function ModuleAdd() {
 
   if (!clients.length || !employees.length) {
     return (
-      <div className="text-center">
+      <div className="h-full flex justify-center items-center">
         Create the client and the employee to attach the module to
       </div>
     );
