@@ -32,6 +32,7 @@ async function CustomerAdd() {
     }
 
     revalidatePath("/customers");
+    revalidatePath("/employees/new");
     redirect("/customers");
   }
 

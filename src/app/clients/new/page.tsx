@@ -30,6 +30,8 @@ function ClientAdd() {
     }
 
     revalidatePath("/clients");
+    revalidatePath("/customers/new");
+    revalidatePath("/modules/new");
     redirect("/clients");
   }
 

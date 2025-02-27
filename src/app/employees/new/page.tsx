@@ -32,13 +32,13 @@ async function ClientAdd() {
     }
 
     revalidatePath("/employees");
+    revalidatePath("/modules/new");
     redirect("/employees");
   }
 
   const customers = await db.customer.findMany();
 
   if (!customers.length) {
-    console.log("customers", customers);
     return (
       <div className="h-full flex justify-center items-center">
         Add at least one customer firstly
