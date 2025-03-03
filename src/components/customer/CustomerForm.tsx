@@ -4,8 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Client, Customer } from "@prisma/client";
+import { CustomerType } from "@/src/schema/customer";
 
-import { Button } from "@/shared/ui/button";
+import { Button } from "@/src/shared/ui/button";
 import {
   Form,
   FormControl,
@@ -13,26 +14,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/shared/ui/form";
-import { Input } from "@/shared/ui/input";
+} from "@/src/shared/ui/form";
+import { Input } from "@/src/shared/ui/input";
 import { CustomerSelect } from "./CustomerSelect";
 
 const formSchema = z.object({
   name: z.string({
     required_error: "Please input employee first name.",
   }),
-  client_id: z
+  clientId: z
     .string({
       required_error: "Please select client.",
     })
     .optional(),
-  email: z
-    .string({
-      required_error: "Please input employee email.",
-    })
-    .email({
-      message: "Please input a valid email.",
-    }),
 });
 
 function CustomerForm({
@@ -47,7 +41,7 @@ function CustomerForm({
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await action(values as Customer);
+    await action(values as CustomerType);
     form.reset();
   }
 
@@ -72,20 +66,7 @@ function CustomerForm({
         />
         <FormField
           control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Customer public email</FormLabel>
-              <FormControl>
-                <Input placeholder="Input customer public email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="client_id"
+          name="clientId"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Select appropriate client</FormLabel>

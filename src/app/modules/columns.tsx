@@ -1,13 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { DURATION } from "@/shared/static/duration";
-import { ModuleType } from "@/schema/module";
-import { Button } from "@/shared/ui/button";
+import { ModulePrismaType } from "@/src/schema/module";
+import { Button } from "@/src/shared/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { ActionLink } from "@/components/ActionLink";
+import { ActionLink } from "@/src/components/ActionLink";
 
-export const columns: ColumnDef<ModuleType>[] = [
+export const columns: ColumnDef<ModulePrismaType>[] = [
   {
     accessorKey: "id",
     header: "Module Id",
@@ -27,29 +26,21 @@ export const columns: ColumnDef<ModuleType>[] = [
     },
   },
   {
-    accessorKey: "duration",
-    header: "Planned time spent",
-    cell: ({ row }) => {
-      return DURATION.find(({ id }) => id === row.original?.duration)
-        ?.visibleValue;
-    },
-  },
-  {
     accessorKey: "notes",
     header: "Module notes",
   },
   {
-    accessorKey: "client_id",
+    accessorKey: "clientId",
     header: "Current client",
     cell: ({ row }) => {
       return row.original?.client?.name;
     },
   },
   {
-    accessorKey: "employee_id",
+    accessorKey: "employeeId",
     header: "Responsible employee",
     cell: ({ row }) => {
-      return `${row.original?.employee?.first_name} ${row.original?.employee?.last_name}`;
+      return `${row.original?.employee?.name}`;
     },
   },
   {

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Client } from "@prisma/client";
+import { SbpmType } from "@/src/schema/sbpm";
 
 import { Button } from "@/src/shared/ui/button";
 import {
@@ -17,12 +17,15 @@ import {
 import { Input } from "@/src/shared/ui/input";
 
 const formSchema = z.object({
-  name: z.string({
-    required_error: "Please input a client name.",
+  first_name: z.string({
+    required_error: "Please input employee first name.",
+  }),
+  last_name: z.string({
+    required_error: "Please input employee last name.",
   }),
 });
 
-function ClientForm({ action }: { action: (data: Client) => void }) {
+function SbpmForm({ action }: { action: (data: SbpmType) => void }) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,8 +36,7 @@ function ClientForm({ action }: { action: (data: Client) => void }) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    // action(formData);
-    await action(values as Client);
+    await action(values as SbpmType);
 
     // Clear the form.
     form.reset();
@@ -44,16 +46,29 @@ function ClientForm({ action }: { action: (data: Client) => void }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-2/3 mx-auto space-y-4"
+        className="mx-auto space-y-10"
       >
         <FormField
           control={form.control}
-          name="name"
+          name="first_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Clients public name</FormLabel>
+              <FormLabel>SBPM worker first name</FormLabel>
               <FormControl>
-                <Input placeholder="Input client data" {...field} />
+                <Input placeholder="Input SBPM worker first name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="last_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>SBPM worker last name</FormLabel>
+              <FormControl>
+                <Input placeholder="Input SBPM worker last name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,4 +82,4 @@ function ClientForm({ action }: { action: (data: Client) => void }) {
   );
 }
 
-export default ClientForm;
+export default SbpmForm;

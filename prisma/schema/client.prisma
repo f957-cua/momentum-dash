@@ -1,7 +1,8 @@
 model Client {
   id        String     @id @default(cuid())
-  email     String     @unique
   name      String
   customers Customer[]
   module    Module[]
+  sbpmId    String     @map("sbpm_id")
+  Sbpm      Sbpm       @relation(fields: [sbpmId], references: [id])
 }

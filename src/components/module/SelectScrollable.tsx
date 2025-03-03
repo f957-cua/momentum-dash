@@ -6,7 +6,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/select";
+} from "@/src/shared/ui/select";
 import { ControllerRenderProps } from "react-hook-form";
 
 export function SelectScrollable({

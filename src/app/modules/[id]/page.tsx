@@ -1,13 +1,11 @@
-import { ModuleTimer } from "@/components/moduleTimer/ModuleTimer";
-import { db } from "@/shared/lib/db";
+import { db } from "@/src/shared/lib/db";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@/shared/ui/card";
-import { convertModuleDuration } from "@/utils/helpers";
+} from "@/src/shared/ui/card";
 import { notFound } from "next/navigation";
 
 export default async function Module({
@@ -47,8 +45,7 @@ export default async function Module({
                 Responsible Employee attached to
               </p>
               <p className="text-sm text-muted-foreground">
-                {module_item.employee.first_name}{" "}
-                {module_item.employee.last_name}
+                {module_item.employee.name}
               </p>
             </div>
           </div>
@@ -75,25 +72,11 @@ export default async function Module({
           <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
             <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
             <div className="space-y-1">
-              <p className="text-sm font-medium leading-none">
-                Planned Module Duration
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {convertModuleDuration(module_item.duration)}
-              </p>
-            </div>
-          </div>
-          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
-            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-            <div className="space-y-1">
               <p className="text-sm font-medium leading-none">Module Status</p>
               <p className="text-sm text-muted-foreground">
                 {module_item.status}
               </p>
             </div>
-          </div>
-          <div className="my-4 flex items-center justify-center pb-4 last:mb-0 last:pb-0">
-            <ModuleTimer />
           </div>
         </CardContent>
       </Card>

@@ -1,8 +1,9 @@
 model Customer {
   id        String     @id @default(cuid())
   name      String
-  client_id String
-  email     String
-  client    Client     @relation(fields: [client_id], references: [id])
+  clientId  String
+  client    Client     @relation(fields: [clientId], references: [id])
   employees Employee[]
+  sbpmId    String     @map("sbpm_id")
+  Sbpm      Sbpm       @relation(fields: [sbpmId], references: [id])
 }

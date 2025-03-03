@@ -5,25 +5,25 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Client, Module, Employee } from "@prisma/client";
-import { ModuleDurationStatus } from "@/schema/module";
+import { ModuleDurationStatus } from "@/src/schema/module";
 
 import { SelectScrollable } from "./SelectScrollable";
 import { ModuleSelect } from "./ModuleSelect";
 import { ModuleDurationSelect } from "./ModuleDurationSelect";
 import { ModuleEmployeeSelect } from "./ModuleEmployeeSelect";
 
-import { Button } from "@/shared/ui/button";
+import { Button } from "@/src/shared/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/shared/ui/form";
-import { Textarea } from "@/shared/ui/textarea";
+} from "@/src/shared/ui/form";
+import { Textarea } from "@/src/shared/ui/textarea";
 
-import { modules } from "@/shared/static/modules";
-import { DURATION } from "@/shared/static/duration";
+import { modules } from "@/src/shared/static/modules";
+import { DURATION } from "@/src/shared/static/duration";
 
 const formSchema = z.object({
   name: z.string({

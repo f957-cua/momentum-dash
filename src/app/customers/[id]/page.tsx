@@ -1,12 +1,12 @@
-import { db } from "@/shared/lib/db";
+import { db } from "@/src/shared/lib/db";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@/shared/ui/card";
-import { DataTable } from "@/shared/ui/data-table";
+} from "@/src/shared/ui/card";
+import { DataTable } from "@/src/shared/ui/data-table";
 import { notFound } from "next/navigation";
 import { columns } from "../../employees/columns";
 
@@ -25,7 +25,7 @@ export default async function Customer({
   }
 
   const employees = await db.employee.findMany({
-    where: { customer_id: id },
+    where: { customerId: id },
     include: {
       customer: true,
     },
@@ -50,15 +50,6 @@ export default async function Customer({
                 Customer Public Name
               </p>
               <p className="text-sm text-muted-foreground">{customer.name}</p>
-            </div>
-          </div>
-          <div className="my-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
-            <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-            <div className="space-y-1">
-              <p className="text-sm font-medium leading-none">
-                Customer Public Email
-              </p>
-              <p className="text-sm text-muted-foreground">{customer.email}</p>
             </div>
           </div>
         </CardContent>

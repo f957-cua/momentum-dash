@@ -1,0 +1,8 @@
+model Sbpm {
+  id        String     @id @default(cuid())
+  name      String
+  clients   Client[]
+  customers Customer[]
+  employees Employee[]
+  modules   Module[]
+}

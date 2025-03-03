@@ -1,30 +1,47 @@
 import React from "react";
-import EmployeeForm from "@/components/employee/EmployeeForm";
-import { Employee } from "@prisma/client";
+import EmployeeForm from "@/src/components/employee/EmployeeForm";
+import { EmployeeType } from "@/src/schema/employee";
 
-import { db } from "@/shared/lib/db";
+import { db } from "@/src/shared/lib/db";
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 async function ClientAdd() {
-  async function createEmployee(formData: Employee) {
+  const cookieHandler = await cookies();
+  const cookiesExist = cookieHandler.has("sbpmId");
+  const sbpmId = cookiesExist ? cookieHandler.get("sbpmId") : null;
+
+  const sbpmWorker = await db.sbpm.findUnique({
+    where: {
+      id: sbpmId?.value ?? "",
+    },
+  });
+
+  if (sbpmWorker === null) {
+    redirect("/");
+  }
+
+  async function createEmployee(formData: EmployeeType) {
     "use server";
 
     const first_name = formData.first_name;
     const last_name = formData.last_name;
-    const customer_id = formData.customer_id;
+    const customerId = formData.customerId;
 
-    if (!first_name || !last_name || !customer_id) {
+    if (!first_name || !last_name || !customerId) {
       throw new Error("Please fill out all fields.");
     }
+
+    const name = `${first_name} ${last_name}`;
 
     try {
       await db.employee.create({
         data: {
-          first_name,
-          last_name,
-          customer_id,
+          name,
+          customerId,
+          sbpmId: sbpmWorker?.id ?? "",
         },
       });
     } catch (error) {

@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/select";
+} from "@/src/shared/ui/select";
 import { ControllerRenderProps } from "react-hook-form";
 
 export function CustomerSelect({
@@ -15,10 +15,9 @@ export function CustomerSelect({
   field: ControllerRenderProps<
     {
       name: string;
-      client_id?: string;
-      email: string;
+      clientId?: string;
     },
-    "client_id"
+    "clientId"
   >;
   items: Record<string, string>[];
 }) {

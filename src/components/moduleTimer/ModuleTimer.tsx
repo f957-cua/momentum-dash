@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { useStopwatch } from "react-timer-hook";
-import { Button } from "@/shared/ui/button";
-import { Separator } from "@/shared/ui/separator";
+import { Button } from "@/src/shared/ui/button";
+import { Separator } from "@/src/shared/ui/separator";
 import { Timer } from "./Timer";
 
 export function ModuleTimer() {

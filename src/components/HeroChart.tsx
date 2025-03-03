@@ -9,7 +9,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/shared/ui/chart";
+} from "@/src/shared/ui/chart";
 
 const chartData = [
   { month: "March", clients: 237, customers: 120, employees: 10, modules: 5 },
@@ -75,7 +75,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function HeroCharts() {
+export function HeroChart() {
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <BarChart accessibilityLayer data={chartData}>

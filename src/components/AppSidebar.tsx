@@ -13,7 +13,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarSeparator,
-} from "@/shared/ui/sidebar";
+} from "@/src/shared/ui/sidebar";
 
 import Link from "next/link";
 import Image from "next/image";

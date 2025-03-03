@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui/select";
+} from "@/src/shared/ui/select";
 import { ControllerRenderProps } from "react-hook-form";
 
 export function EmployeeSelect({
@@ -16,9 +16,9 @@ export function EmployeeSelect({
     {
       first_name: string;
       last_name: string;
-      customer_id: string;
+      customerId: string;
     },
-    "customer_id"
+    "customerId"
   >;
   items: Record<string, string>[];
 }) {

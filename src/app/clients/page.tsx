@@ -1,8 +1,7 @@
 import React from "react";
-import { db } from "@/shared/lib/db";
-
+import { db } from "@/src/shared/lib/db";
 import { columns } from "./columns";
-import { DataTable } from "@/shared/ui/data-table";
+import { DataTable } from "@/src/shared/ui/data-table";
 
 async function Clients() {
   const data = await db.client.findMany();

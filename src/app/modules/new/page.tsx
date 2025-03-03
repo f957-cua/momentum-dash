@@ -1,13 +1,28 @@
 import React from "react";
-import ModuleForm from "@/components/module/ModuleForm";
+import ModuleForm from "@/src/components/module/ModuleForm";
 import { Module, ModuleStatus } from "@prisma/client";
 
-import { db } from "@/shared/lib/db";
+import { db } from "@/src/shared/lib/db";
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 async function ModuleAdd() {
+  const cookieHandler = await cookies();
+  const cookiesExist = cookieHandler.has("sbpmId");
+  const sbpmId = cookiesExist ? cookieHandler.get("sbpmId") : null;
+
+  const sbpmWorker = await db.sbpm.findUnique({
+    where: {
+      id: sbpmId?.value ?? "",
+    },
+  });
+
+  if (sbpmWorker === null) {
+    redirect("/");
+  }
+
   const clients = await db.client.findMany();
 
   const employees = await db.employee.findMany();
@@ -24,12 +39,12 @@ async function ModuleAdd() {
     "use server";
 
     const name = formData.name;
-    const client_id = formData.client_id;
-    const employee_id = formData.employee_id;
+    const clientId = formData.clientId;
+    const employeeId = formData.employeeId;
     const duration = formData.duration;
     const notes = formData.notes;
 
-    if (!name || !client_id || !employee_id || !duration) {
+    if (!name || !clientId || !employeeId || !duration) {
       throw new Error("Please fill out all fields.");
     }
     // Create the post using Prisma
@@ -37,9 +52,9 @@ async function ModuleAdd() {
       await db.module.create({
         data: {
           name,
-          client_id,
-          employee_id,
-          duration,
+          clientId,
+          employeeId,
+          sbpmId: sbpmWorker?.id ?? "",
           notes,
           status: ModuleStatus.PENDING,
         },

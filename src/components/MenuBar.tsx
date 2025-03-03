@@ -6,7 +6,7 @@ import {
   MenubarMenu,
   MenubarShortcut,
   MenubarTrigger,
-} from "@/shared/ui/menubar";
+} from "@/src/shared/ui/menubar";
 
 import Link from "next/link";
 

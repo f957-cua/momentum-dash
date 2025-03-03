@@ -1,21 +1,35 @@
 import React from "react";
-import CustomerForm from "@/components/customer/CustomerForm";
+import CustomerForm from "@/src/components/customer/CustomerForm";
 import { Customer } from "@prisma/client";
 
-import { db } from "@/shared/lib/db";
+import { db } from "@/src/shared/lib/db";
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 async function CustomerAdd() {
+  const cookieHandler = await cookies();
+  const cookiesExist = cookieHandler.has("sbpmId");
+  const sbpmId = cookiesExist ? cookieHandler.get("sbpmId") : null;
+
+  const sbpmWorker = await db.sbpm.findUnique({
+    where: {
+      id: sbpmId?.value ?? "",
+    },
+  });
+
+  if (sbpmWorker === null) {
+    redirect("/");
+  }
+
   async function createCustomer(formData: Customer) {
     "use server";
 
     const name = formData.name;
-    const email = formData.email;
-    const client_id = formData.client_id;
+    const clientId = formData.clientId;
 
-    if (!name || !email) {
+    if (!name || !clientId) {
       throw new Error("Please fill out all fields.");
     }
 
@@ -23,8 +37,8 @@ async function CustomerAdd() {
       await db.customer.create({
         data: {
           name,
-          email,
-          client_id,
+          clientId,
+          sbpmId: sbpmWorker?.id ?? "",
         },
       });
     } catch (error) {

@@ -3,8 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Employee } from "@prisma/client";
-import { Button } from "@/shared/ui/button";
-import { ActionLink } from "@/components/ActionLink";
+import { Button } from "@/src/shared/ui/button";
+import { ActionLink } from "@/src/components/ActionLink";
 
 export const columns: ColumnDef<Employee>[] = [
   {
@@ -12,7 +12,7 @@ export const columns: ColumnDef<Employee>[] = [
     header: "Employee Id",
   },
   {
-    accessorKey: "first_name",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
@@ -20,20 +20,6 @@ export const columns: ColumnDef<Employee>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Employee First Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "last_name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Employee Last Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

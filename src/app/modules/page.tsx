@@ -1,7 +1,7 @@
-import { db } from "@/shared/lib/db";
+import { db } from "@/src/shared/lib/db";
 import React from "react";
 import { columns } from "./columns";
-import { DataTable } from "@/shared/ui/data-table";
+import { DataTable } from "@/src/shared/ui/data-table";
 
 async function Modules() {
   const data = await db.module

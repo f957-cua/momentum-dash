@@ -1,10 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CustomerType } from "@/schema/customer";
-import { Button } from "@/shared/ui/button";
+import { CustomerType } from "@/src/schema/customer";
+import { Button } from "@/src/shared/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { ActionLink } from "@/components/ActionLink";
+import { ActionLink } from "@/src/components/ActionLink";
 
 export const columns: ColumnDef<CustomerType>[] = [
   {
@@ -26,21 +26,7 @@ export const columns: ColumnDef<CustomerType>[] = [
     },
   },
   {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Customer Public Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "client_id",
+    accessorKey: "clientId",
     header: "Current client",
     cell: ({ row }) => {
       return row.original?.client?.name;
