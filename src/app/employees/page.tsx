@@ -4,7 +4,12 @@ import { DataTable } from "@/src/shared/ui/data-table";
 import { columns } from "./columns";
 
 async function Employees() {
-  const data = await db.employee.findMany();
+  const data = await db.employee.findMany({
+    include: {
+      client: true,
+      customer: true,
+    },
+  });
 
   return (
     <div className="container mx-auto py-10 px-10">
