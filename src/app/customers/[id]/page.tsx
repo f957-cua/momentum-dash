@@ -6,9 +6,8 @@ import {
   CardDescription,
   CardContent,
 } from "@/src/shared/ui/card";
-import { DataTable } from "@/src/shared/ui/data-table";
-import { notFound } from "next/navigation";
-import { columns } from "../../employees/columns";
+import { notFound, redirect } from "next/navigation";
+import EmployeeDataListForExistingCustomer from "../../employees/EmployeeDataListForExistingClient";
 
 export default async function Customer({
   params,
@@ -28,8 +27,14 @@ export default async function Customer({
     where: { customerId: id },
     include: {
       customer: true,
+      client: true,
     },
   });
+
+  const action = async () => {
+    "use server";
+    redirect(`/employees/new?clientId=${customer.clientId}&customerId=${id}`);
+  };
 
   const CARD_TITLE = `Customer ${customer.name} Details`;
   const CARD_DESCRIPTION = `Here are the details of the customer which have saved by next id in database ${customer.id}.`;
@@ -54,10 +59,11 @@ export default async function Customer({
           </div>
         </CardContent>
       </Card>
-      <h1 className="text-center font-bold py-8">
-        Employees list for Customer {customer.name}
-      </h1>
-      <DataTable data={employees} columns={columns} />
+      <EmployeeDataListForExistingCustomer
+        data={employees}
+        action={action}
+        customerName={customer.name}
+      />
     </div>
   );
 }

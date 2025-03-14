@@ -22,8 +22,8 @@ export const ModuleDurationStatus = z.enum([
 export const ModuleSchemaType = z.object({
   id: z.string(),
   name: z.string(),
-  client_id: z.string(),
-  employee_id: z.string(),
+  // client_id: z.string(),
+  // employee_id: z.string(),
   // duration: ModuleDurationStatus,
   notes: z.string().optional(),
   client: z.object({
@@ -51,9 +51,19 @@ export const ModulePrismaSchemaType = z.object({
     id: z.string(),
     name: z.string(),
   }),
+  createdAt: z.string(),
+  updatedAt: z.string().optional(),
+  status: z.string(),
+});
+
+export const ModuleFormType = z.object({
+  name: z.string(),
+  notes: z.string().optional(),
 });
 
 export type ModuleType = z.infer<typeof ModuleSchemaType>;
 export type ModulePrismaType = z.infer<typeof ModulePrismaSchemaType>;
+
+export type ModuleFormDataType = z.infer<typeof ModuleFormType>;
 
 export type ModuleDurationStatusType = z.infer<typeof ModuleDurationStatus>;

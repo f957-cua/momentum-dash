@@ -1,15 +1,30 @@
 import React from "react";
 import ModuleForm from "@/src/components/module/ModuleForm";
-import { Module, ModuleStatus } from "@prisma/client";
+import { ModuleStatus } from "@prisma/client";
 
 import { db } from "@/src/shared/lib/db";
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { ModuleFormDataType } from "@/src/schema/module";
 
-async function ModuleAdd() {
+async function ModuleAdd({
+  searchParams,
+}: {
+  searchParams?: Promise<{
+    clientId: string;
+    customerId: string;
+    employeeId: string;
+  }>;
+}) {
+  const params = await searchParams;
+  const clientId = params?.clientId;
+  const customerId = params?.customerId;
+  const employeeId = params?.employeeId;
+
   const cookieHandler = await cookies();
+
   const cookiesExist = cookieHandler.has("sbpmId");
   const sbpmId = cookiesExist ? cookieHandler.get("sbpmId") : null;
 
@@ -23,28 +38,13 @@ async function ModuleAdd() {
     redirect("/");
   }
 
-  const clients = await db.client.findMany();
-
-  const employees = await db.employee.findMany();
-
-  if (!clients.length || !employees.length) {
-    return (
-      <div className="h-full flex justify-center items-center">
-        Create the client and the employee to attach the module to
-      </div>
-    );
-  }
-
-  async function createModule(formData: Module) {
+  async function createModule(formData: ModuleFormDataType) {
     "use server";
 
     const name = formData.name;
-    const clientId = formData.clientId;
-    const employeeId = formData.employeeId;
-    const duration = formData.duration;
     const notes = formData.notes;
 
-    if (!name || !clientId || !employeeId || !duration) {
+    if (!name || !employeeId || !customerId || !clientId) {
       throw new Error("Please fill out all fields.");
     }
     // Create the post using Prisma
@@ -52,15 +52,12 @@ async function ModuleAdd() {
       await db.module.create({
         data: {
           name,
-          clientId,
           employeeId,
+          customerId,
+          clientId,
           sbpmId: sbpmWorker?.id ?? "",
           notes,
           status: ModuleStatus.PENDING,
-        },
-        include: {
-          client: true,
-          employee: true,
         },
       });
     } catch (error) {
@@ -68,17 +65,14 @@ async function ModuleAdd() {
     }
 
     revalidatePath("/modules");
-    redirect("/modules");
+    revalidatePath(`/employees/${employeeId}`);
+    redirect(`/employees/${employeeId}`);
   }
 
   return (
     <div className="w-[600px] mx-auto">
       <h1 className="text-center font-bold py-8">Create new Module</h1>
-      <ModuleForm
-        action={createModule}
-        clients={clients}
-        employees={employees}
-      />
+      <ModuleForm action={createModule} />
     </div>
   );
 }

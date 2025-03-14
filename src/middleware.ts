@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  console.log("lol!!!");
+  console.log("cached in middleware");
   // Access the query string parameters
   const queryParams = request.nextUrl.searchParams;
   queryParams.forEach((value, key) => {

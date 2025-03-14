@@ -1,15 +1,17 @@
 model Module {
   id         String       @id @default(cuid())
   name       String
-  clientId   String       @map("client_id")
-  employeeId String       @map("employee_id")
   // duration   ModuleDuration
   notes      String?
   status     ModuleStatus @default(PENDING)
-  client     Client       @relation(fields: [clientId], references: [id])
+  employeeId String       @map("employee_id")
   employee   Employee     @relation(fields: [employeeId], references: [id])
   sbpmId     String       @map("sbpm_id")
-  Sbpm       Sbpm?        @relation(fields: [sbpmId], references: [id])
+  sbpm       Sbpm         @relation(fields: [sbpmId], references: [id])
+  clientId   String       @map("client_id")
+  client     Client?      @relation(fields: [clientId], references: [id])
+  customerId String       @map("customer_id")
+  customer   Customer?    @relation(fields: [customerId], references: [id])
   createdAt  DateTime     @default(now()) @map("created_at")
   updatedAt  DateTime     @updatedAt @map("updated_at")
 }

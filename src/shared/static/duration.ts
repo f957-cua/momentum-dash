@@ -1,4 +1,4 @@
-import { ModuleDurationStatus } from "@/schema/module";
+import { ModuleDurationStatus } from "@/src/schema/module";
 
 export const DURATION = [
   {

@@ -11,4 +11,10 @@ export const CustomerSchema = z.object({
   }),
 });
 
+export const CustomerFormSchema = z.object({
+  name: z.string(),
+});
+
+export type CustomerFormType = z.infer<typeof CustomerFormSchema>;
+
 export type CustomerType = z.infer<typeof CustomerSchema>;

@@ -8,7 +8,27 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-async function ClientAdd() {
+async function EmployeeAdd({
+  searchParams,
+}: {
+  searchParams?: Promise<{ customerId: string; clientId: string }>;
+}) {
+  const params = await searchParams;
+  const customerId = params?.customerId;
+  const clientId = params?.clientId;
+
+  const customer = await db.customer.findUnique({
+    where: {
+      id: customerId ?? "",
+    },
+  });
+
+  if (customer === null) {
+    <div className="h-full flex justify-center items-center">
+      The Database is revalidate now, or maybe current customer updating now.
+    </div>;
+  }
+
   const cookieHandler = await cookies();
   const cookiesExist = cookieHandler.has("sbpmId");
   const sbpmId = cookiesExist ? cookieHandler.get("sbpmId") : null;
@@ -28,9 +48,8 @@ async function ClientAdd() {
 
     const first_name = formData.first_name;
     const last_name = formData.last_name;
-    const customerId = formData.customerId;
 
-    if (!first_name || !last_name || !customerId) {
+    if (!first_name || !last_name || !customerId || !clientId) {
       throw new Error("Please fill out all fields.");
     }
 
@@ -40,6 +59,7 @@ async function ClientAdd() {
       await db.employee.create({
         data: {
           name,
+          clientId,
           customerId,
           sbpmId: sbpmWorker?.id ?? "",
         },
@@ -49,26 +69,18 @@ async function ClientAdd() {
     }
 
     revalidatePath("/employees");
-    revalidatePath("/modules/new");
-    redirect("/employees");
+    revalidatePath(`/customers/${customerId}`);
+    redirect(`/customers/${customerId}`);
   }
 
-  const customers = await db.customer.findMany();
-
-  if (!customers.length) {
-    return (
-      <div className="h-full flex justify-center items-center">
-        Add at least one customer firstly
-      </div>
-    );
-  }
+  const TITLE_TEXT = `Create new Employee for ${customer?.name}`;
 
   return (
     <div className="w-[600px] mx-auto">
-      <h1 className="text-center font-bold py-8">Create new Employee</h1>
-      <EmployeeForm action={createEmployee} customerList={customers} />
+      <h1 className="text-center font-bold py-8">{TITLE_TEXT}</h1>
+      <EmployeeForm action={createEmployee} />
     </div>
   );
 }
 
-export default ClientAdd;
+export default EmployeeAdd;

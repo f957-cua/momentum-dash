@@ -1,5 +1,5 @@
-import { db } from "@/shared/lib/db";
-import { notFound } from "next/navigation";
+import { db } from "@/src/shared/lib/db";
+import { notFound, redirect } from "next/navigation";
 
 import {
   Card,
@@ -7,9 +7,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/shared/ui/card";
-import { DataTable } from "@/shared/ui/data-table";
-import { columns } from "../../customers/columns";
+} from "@/src/shared/ui/card";
+import CustomerDataListForExistingClient from "../../customers/CustomerDataListForExistingClient";
 
 export default async function Client({
   params,
@@ -24,6 +23,11 @@ export default async function Client({
   if (!client) {
     notFound();
   }
+
+  const action = async () => {
+    "use server";
+    redirect(`/customers/new?clientId=${id}`);
+  };
 
   const customers = await db.customer.findMany({
     include: {
@@ -55,10 +59,11 @@ export default async function Client({
           </div>
         </CardContent>
       </Card>
-      <h1 className="text-center font-bold py-8">
-        Customers list for Client {client.name}
-      </h1>
-      <DataTable data={customers} columns={columns} />
+      <CustomerDataListForExistingClient
+        data={customers}
+        action={action}
+        clientName={client.name}
+      />
     </div>
   );
 }

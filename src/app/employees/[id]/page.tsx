@@ -6,9 +6,8 @@ import {
   CardDescription,
   CardContent,
 } from "@/src/shared/ui/card";
-import { DataTable } from "@/src/shared/ui/data-table";
-import { notFound } from "next/navigation";
-import { columns } from "../../modules/columns";
+import ModuleDataListForExistingEmployee from "../../modules/ModuleDataListForExistingEmployee";
+import { redirect, notFound } from "next/navigation";
 
 export default async function Employee({
   params,
@@ -24,6 +23,13 @@ export default async function Employee({
   if (!employee) {
     notFound();
   }
+
+  const action = async () => {
+    "use server";
+    redirect(
+      `/modules/new?clientId=${employee.clientId}&customerId=${employee.customerId}&employeeId=${id}`,
+    );
+  };
 
   const modules = await db.module.findMany({
     where: { employeeId: id },
@@ -54,10 +60,11 @@ export default async function Employee({
           </div>
         </CardContent>
       </Card>
-      <h1 className="text-center font-bold py-8">
-        Modules list for Employee {employee.name}
-      </h1>
-      <DataTable data={modules} columns={columns} />
+      <ModuleDataListForExistingEmployee
+        data={modules}
+        action={action}
+        employeeName={employee.name}
+      />
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Customer } from "@prisma/client";
 import { EmployeeType } from "@/src/schema/employee";
 
 import { Button } from "@/src/shared/ui/button";
@@ -16,7 +15,6 @@ import {
   FormMessage,
 } from "@/src/shared/ui/form";
 import { Input } from "@/src/shared/ui/input";
-import { EmployeeSelect } from "./EmployeeSelect";
 
 const formSchema = z.object({
   first_name: z.string({
@@ -25,18 +23,9 @@ const formSchema = z.object({
   last_name: z.string({
     required_error: "Please input employee last name.",
   }),
-  customerId: z.string({
-    required_error: "Please select customer.",
-  }),
 });
 
-function EmployeeForm({
-  action,
-  customerList,
-}: {
-  action: (data: EmployeeType) => void;
-  customerList: Customer[];
-}) {
+function EmployeeForm({ action }: { action: (data: EmployeeType) => void }) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -81,17 +70,6 @@ function EmployeeForm({
               <FormControl>
                 <Input placeholder="Input employee last name" {...field} />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="customerId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Select existed customer</FormLabel>
-              <EmployeeSelect field={field} items={customerList} />
               <FormMessage />
             </FormItem>
           )}

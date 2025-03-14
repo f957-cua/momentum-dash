@@ -1,4 +1,4 @@
-import { UsersRound, UserRoundPlus } from "lucide-react";
+import { UsersRound } from "lucide-react";
 
 import {
   Sidebar,
@@ -42,29 +42,6 @@ const lists = [
   },
 ];
 
-const createNew = [
-  {
-    title: "New Client",
-    url: "/clients/new",
-    icon: UserRoundPlus,
-  },
-  {
-    title: "New Customer",
-    url: "/customers/new",
-    icon: UserRoundPlus,
-  },
-  {
-    title: "New Employee",
-    url: "/employees/new",
-    icon: UserRoundPlus,
-  },
-  {
-    title: "New Module",
-    url: "/modules/new",
-    icon: UserRoundPlus,
-  },
-];
-
 export function AppSidebar() {
   return (
     <Sidebar>
@@ -92,23 +69,6 @@ export function AppSidebar() {
                 </SidebarMenuButton>
                 <SidebarMenuSub>
                   {lists.map((item) => (
-                    <SidebarMenuSubItem key={item.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={item.url}>
-                          <item.icon />
-                          <span>{item.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <span>Create New</span>
-                </SidebarMenuButton>
-                <SidebarMenuSub>
-                  {createNew.map((item) => (
                     <SidebarMenuSubItem key={item.title}>
                       <SidebarMenuSubButton asChild>
                         <a href={item.url}>

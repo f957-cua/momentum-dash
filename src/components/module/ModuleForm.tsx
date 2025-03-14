@@ -4,13 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Client, Module, Employee } from "@prisma/client";
-import { ModuleDurationStatus } from "@/src/schema/module";
+import { ModuleFormDataType } from "@/src/schema/module";
 
 import { SelectScrollable } from "./SelectScrollable";
-import { ModuleSelect } from "./ModuleSelect";
-import { ModuleDurationSelect } from "./ModuleDurationSelect";
-import { ModuleEmployeeSelect } from "./ModuleEmployeeSelect";
 
 import { Button } from "@/src/shared/ui/button";
 import {
@@ -23,47 +19,18 @@ import {
 import { Textarea } from "@/src/shared/ui/textarea";
 
 import { modules } from "@/src/shared/static/modules";
-import { DURATION } from "@/src/shared/static/duration";
 
 const formSchema = z.object({
   name: z.string({
     required_error: "Please select an email to display.",
   }),
-  client_id: z.string({
-    required_error: "Please select a client.",
-  }),
-  employee_id: z.string({
-    required_error: "Please select an employee.",
-  }),
-  duration: z.enum([
-    ModuleDurationStatus.Enum.HALF_HOUR,
-    ModuleDurationStatus.Enum.ONE_HOUR,
-    ModuleDurationStatus.Enum.ONE_AND_HALF_HOUR,
-    ModuleDurationStatus.Enum.TWO_HOURS,
-    ModuleDurationStatus.Enum.TWO_AND_HALF_HOURS,
-    ModuleDurationStatus.Enum.THREE_HOURS,
-    ModuleDurationStatus.Enum.THREE_AND_HALF_HOURS,
-    ModuleDurationStatus.Enum.FOUR_HOURS,
-    ModuleDurationStatus.Enum.FOUR_AND_HALF_HOURS,
-    ModuleDurationStatus.Enum.FIVE_HOURS,
-    ModuleDurationStatus.Enum.FIVE_AND_HALF_HOURS,
-    ModuleDurationStatus.Enum.SIX_HOURS,
-    ModuleDurationStatus.Enum.SIX_AND_HALF_HOURS,
-    ModuleDurationStatus.Enum.SEVEN_HOURS,
-    ModuleDurationStatus.Enum.SEVEN_AND_HALF_HOURS,
-    ModuleDurationStatus.Enum.EIGHT_HOURS,
-  ]),
   notes: z.string().optional(),
 });
 
 export function ModuleForm({
   action,
-  clients,
-  employees,
 }: {
-  action: (data: Module) => void;
-  clients: Client[];
-  employees: Employee[];
+  action: (data: ModuleFormDataType) => void;
 }) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -74,7 +41,7 @@ export function ModuleForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    await action(values as Module);
+    await action(values as ModuleFormDataType);
 
     // Clear the form.
     form.reset();
@@ -98,26 +65,6 @@ export function ModuleForm({
         />
         <FormField
           control={form.control}
-          name="client_id"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Select Client</FormLabel>
-              <ModuleSelect field={field} items={clients} />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="employee_id"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Select Employee</FormLabel>
-              <ModuleEmployeeSelect field={field} items={employees} />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="notes"
           render={({ field }) => (
             <FormItem>
@@ -134,17 +81,6 @@ export function ModuleForm({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="duration"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="block">Module duration in hours</FormLabel>
-              <ModuleDurationSelect field={field} items={DURATION} />
-            </FormItem>
-          )}
-        />
-
         <Button className="w-full" type="submit">
           Submit
         </Button>

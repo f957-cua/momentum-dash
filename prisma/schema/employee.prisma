@@ -3,7 +3,9 @@ model Employee {
   name       String
   customerId String   @map("customer_id")
   customer   Customer @relation(fields: [customerId], references: [id])
-  modules    Module[]
+  clientId   String   @map("client_id")
+  client     Client   @relation(fields: [clientId], references: [id])
   sbpmId     String   @map("sbpm_id")
-  Sbpm       Sbpm     @relation(fields: [sbpmId], references: [id])
+  sbpm       Sbpm     @relation(fields: [sbpmId], references: [id])
+  modules    Module[]
 }
