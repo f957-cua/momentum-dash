@@ -39,6 +39,31 @@ export default async function Employee({
     },
   });
 
+  // Map the data to match the expected type structure
+  const formattedData = modules.map((item) => ({
+    id: item.id,
+    name: item.name,
+    status: item.status as string, // Ensure status is a string
+    createdAt: item.createdAt.toISOString(),
+    updatedAt: item.updatedAt.toISOString(),
+    client_id: item.clientId,
+    employee_id: item.employeeId,
+    notes: item.notes ?? undefined,
+    employee: {
+      id: item.employee.id,
+      name: item.employee.name,
+    },
+    client: item.client
+      ? {
+          id: item.client.id,
+          name: item.client.name,
+        }
+      : {
+          id: "",
+          name: "Unknown Client",
+        }, // Provide a default value if client is null
+  }));
+
   const CARD_TITLE = `Employee ${employee.name} Details`;
   const CARD_DESCRIPTION = `Here are the details of the employee which have been saved by next id in database ${employee.id}.`;
 
@@ -61,7 +86,7 @@ export default async function Employee({
         </CardContent>
       </Card>
       <ModuleDataListForExistingEmployee
-        data={modules}
+        data={formattedData}
         action={action}
         employeeName={employee.name}
       />

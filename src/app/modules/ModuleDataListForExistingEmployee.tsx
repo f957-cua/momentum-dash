@@ -1,8 +1,9 @@
 import React from "react";
-import { Module, ModuleStatus } from "@prisma/client";
+import { ModuleStatus } from "@prisma/client";
 import { columns } from "./columns";
 import { Button } from "@/src/shared/ui/button";
 import { DataTable } from "@/src/shared/ui/data-table";
+import { ModulePrismaType } from "@/src/schema/module";
 
 function ModuleDataListForExistingEmployee({
   action,
@@ -10,7 +11,7 @@ function ModuleDataListForExistingEmployee({
   employeeName,
 }: {
   action: () => void;
-  data: Module[];
+  data: ModulePrismaType[];
   employeeName: string;
 }) {
   const activeTallyList = data.filter(
